@@ -10,16 +10,27 @@ function UserContext({ children }) {
 
   const getCurrentUser = async () => {
     try {
-      const result = await await axios.post(
-        `${serverUrl}/api/v1/user/getCurrentUser`,
-        {},
-        { withCredentials: true }
-      );
+      // const result = await axios.post(
+      //   `${serverUrl}/api/user/getCurrentUser`,
+      //   {},
+      //   { withCredentials: true }
+      // );
 
+      
+      // In UserContext.jsx
+const result = await axios.post(
+  `${serverUrl}/api/user/getCurrentUser`,
+  {},
+  { withCredentials: true } // <-- This is correct
+);
       setUserData(result.data);
       console.log(result.data);
+      // } catch (error) {
+      //   setUserData(null);
+      //   console.error(error);
+      // }
     } catch (error) {
-      setUserData(null);
+      setUserData(null); // <-- This is correct. It signifies no logged-in user.
       console.error(error);
     }
   };
