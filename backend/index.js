@@ -4,13 +4,27 @@ import cors from "cors"
 
 import connectDb from "./config/db.js";
 import cookieParser from "cookie-parser";
+
+//Routes import
 import authRoutes from "./routes/authRoute.js";
 import userRoutes from "./routes/userRoutes.js";
+import productRoutes from "./routes/productRoute.js";
+import cartRoutes from "./routes/cartRoutes.js";
+import orderRoutes from "./routes/orderRoute.js";
 
 
 
 
 dotenv.config();
+
+console.log("Loaded Cloudinary ENV:", process.env.CLOUDINARY_CLOUD_NAME);
+console.log("Cloudinary Config Test:", {
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY ? "✓ Loaded" : "✗ Missing",
+  api_secret: process.env.CLOUDINARY_API_SECRET ? "✓ Loaded" : "✗ Missing"
+});
+
+
 
 const port = process.env.PORT || 8000;
 const app = express();
@@ -24,9 +38,14 @@ app.use(cors({
 
 // Routes
 app.use("/api/auth", authRoutes)
-// app.use("/api/user", userRoutes)
+
 app.use("/api/user", userRoutes)
 
+app.use("/api/product",productRoutes)
+
+app.use("/api/cart",cartRoutes)
+
+app.use("/api/order",orderRoutes)
 
 
 

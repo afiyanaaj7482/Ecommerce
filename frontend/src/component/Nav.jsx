@@ -13,12 +13,15 @@ import { IoMdHome } from "react-icons/io";
 import { HiOutlineCollection } from "react-icons/hi";
 import { IoMdContacts } from "react-icons/io";
 import { MdOutlineShoppingCart } from "react-icons/md";
+import { shopDataContext } from "../pages/context/ShopContext";
 
 function Nav() {
   const { getCurrentUser, userData } = useContext(userDataContext);
   let { serverUrl } = useContext(authDataContext);
   const navigate = useNavigate();
-  const [showSearch, setShowSearch] = useState(false);
+  let { showSearch, setShowSearch, search, setSearch , getCartCount } =
+    useContext(shopDataContext);
+
   const [showprofile, setShowProfile] = useState(false);
 
   const handleLogout = async () => {
@@ -28,7 +31,6 @@ function Nav() {
       });
       console.log(result.data);
       getCurrentUser();
-      // navigate("/login");
     } catch (error) {
       console.log(error);
     }
@@ -73,7 +75,10 @@ function Nav() {
         {!showSearch && (
           <FaSearch
             className="w-[28px] h-[28px] text-[#000000] cursor-pointer"
-            onClick={() => setShowSearch((prev) => !prev)}
+            onClick={() => {
+              setShowSearch((prev) => !prev);
+              navigate("/Collection");
+            }}
           />
         )}
         {showSearch && (
@@ -82,6 +87,18 @@ function Nav() {
             onClick={() => setShowSearch((prev) => !prev)}
           />
         )}
+        {showSearch && (
+          <div className="w-[100%] h-[80px] bg-[#d8f6f9dd] absolute top-[100%] left-0 right-0 flex items-center justify-center">
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="lg:w-[50%] w-[80%] h-[60%] bg-[#233533] rounded-[30px] px-[50px] placeholder:text-white text-white text-[18px]"
+              placeholder="Search Here"
+            />
+          </div>
+        )}
+
         {!userData && (
           <FaCircleUser
             className="w-[38px] h-[38px] text-[#000000] cursor-pointer"
@@ -97,9 +114,10 @@ function Nav() {
             {userData.name?.charAt(0)}
           </div>
         )}
-        <BsCart className="w-[38px] h-[38px] text-[#000000] cursor-pointer  hidden md:block" />
-        <p className="absolute w-[18px] h-[18px] items-center justify-center bg-black px-[5px] py-[2px] text-white rounded-full text-[9px] top-[10px] right-[23px] hidden md:block">
-          10
+        <BsCart className="w-[38px] h-[38px] text-[#000000] cursor-pointer  hidden md:block" onClick={()=>navigate('/cart')}/>
+        <p className="absolute w-[18px] h-[18px] items-center justify-center bg-black px-[5px] py-[2px]
+         text-white rounded-full text-[9px] top-[10px] right-[23px] hidden md:block">
+          {getCartCount()}
         </p>
         {showSearch && (
           <div className="w-[100%]  h-[80px] bg-[#d8f6f9dd] absolute top-[100%] left-0 right-0 flex items-center justify-center ">
@@ -114,8 +132,6 @@ function Nav() {
         {showprofile && (
           <div className="absolute w-[220px] h-[150px] bg-[#000000d7] top-[110%] right-[4%] border-[1px] border-[#aaa9a9] rounded-[10px] z-10">
             <ul className="w-[100%] h-[100%] flex items-start justify-around flex-col text-[17px] py-[10px] text-[white]">
-             
-             
               {!userData ? (
                 <li
                   className="w-[100%] hover:bg-[#2f2f2f]  px-[15px] py-[10px] cursor-pointer"
@@ -128,8 +144,6 @@ function Nav() {
                 </li>
               ) : (
                 <>
-                
-                
                   <li
                     className="w-[100%] hover:bg-[#2f2f2f]  px-[15px] py-[10px] cursor-pointer"
                     onClick={() => {
@@ -140,8 +154,6 @@ function Nav() {
                     LogOut
                   </li>
 
-              
-              
                   <li
                     className="w-[100%] hover:bg-[#2f2f2f]  px-[15px] py-[10px] cursor-pointer"
                     onClick={() => {
@@ -154,7 +166,6 @@ function Nav() {
                 </>
               )}
 
-             
               <li
                 className="w-[100%] hover:bg-[#2f2f2f]  px-[15px] py-[10px] cursor-pointer"
                 onClick={() => {
@@ -167,14 +178,41 @@ function Nav() {
             </ul>
           </div>
         )}
-         <div className='w-[100vw] h-[90px] flex items-center justify-between px-[20px] text-[12px]
-         fixed bottom-0 left-0 bg-[#191818]   md:hidden'>
-            <button className='text-[white] flex items-center justify-center flex-col gap-[2px]' onClick={()=>navigate("/")}><IoMdHome className='w-[28px] h-[28px] text-[white] md:hidden'/> Home</button>
-             <button className='text-[white] flex items-center justify-center flex-col gap-[2px]' onClick={()=>navigate("collection")}><HiOutlineCollection className='w-[28px] h-[28px] text-[white] md:hidden'/> Collections</button>
-              <button className='text-[white] flex items-center justify-center flex-col gap-[2px] ' onClick={()=>navigate("/contact")}><IoMdContacts  className='w-[28px] h-[28px] text-[white] md:hidden'/>Contact</button>
-               <button className='text-[white] flex items-center justify-center flex-col gap-[2px]' onClick={()=>navigate("/cart")}><MdOutlineShoppingCart className='w-[28px] h-[28px] text-[white] md:hidden'/> Cart</button>
-               {/* <p className='absolute w-[18px] h-[18px] flex items-center justify-center bg-white px-[5px] py-[2px] text-black font-semibold  rounded-full text-[9px] top-[8px] right-[18px]'>{getCartCount()}</p> */}
-
+        <div
+          className="w-[100vw] h-[90px] flex items-center justify-between px-[20px] text-[12px]
+         fixed bottom-0 left-0 bg-[#191818]   md:hidden"
+        >
+          <button
+            className="text-[white] flex items-center justify-center flex-col gap-[2px]"
+            onClick={() => navigate("/")}
+          >
+            <IoMdHome className="w-[28px] h-[28px] text-[white] md:hidden" />{" "}
+            Home
+          </button>
+          <button
+            className="text-[white] flex items-center justify-center flex-col gap-[2px]"
+            onClick={() => navigate("collection")}
+          >
+            <HiOutlineCollection className="w-[28px] h-[28px] text-[white] md:hidden" />{" "}
+            Collections
+          </button>
+          <button
+            className="text-[white] flex items-center justify-center flex-col gap-[2px] "
+            onClick={() => navigate("/contact")}
+          >
+            <IoMdContacts className="w-[28px] h-[28px] text-[white] md:hidden" />
+            Contact
+          </button>
+          <button
+            className="text-[white] flex items-center justify-center flex-col gap-[2px]"
+            onClick={() => navigate("/cart")}
+          >
+            <MdOutlineShoppingCart className="w-[28px] h-[28px] text-[white] md:hidden" onClick={()=>navigate('/cart')}/>{" "}
+            Cart
+          </button>
+          <p className='absolute w-[18px] h-[18px] flex items-center justify-center bg-white
+           px-[5px] py-[2px] text-black font-semibold  rounded-full text-[9px] top-[8px] right-[18px]'>
+           {getCartCount()}</p>
         </div>
       </div>
     </div>
