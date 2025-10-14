@@ -6,8 +6,9 @@ import Orders from './pages/Orders';
 import Login from './pages/Login';
 import Lists from './pages/Lists';
 import { adminDataContext } from './context/AdminContext';
+  import { ToastContainer, toast } from 'react-toastify'; 
 
-function App() {
+function App() {  
   const { adminData } = useContext(adminDataContext);
 
   // If no adminData, show login page
@@ -17,6 +18,8 @@ function App() {
 
   // If adminData is present, render app routes
   return (
+    <>
+     <ToastContainer />
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/add" element={<Add />} />
@@ -24,6 +27,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/orders" element={<Orders />} />
     </Routes>
+    </>
   );
 }
 

@@ -157,7 +157,7 @@ function Nav() {
                   <li
                     className="w-[100%] hover:bg-[#2f2f2f]  px-[15px] py-[10px] cursor-pointer"
                     onClick={() => {
-                      navigate("/orders");
+                      navigate("/order");
                       setShowProfile(false);
                     }}
                   >

@@ -15,7 +15,9 @@ import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import PlaceOrder from "./pages/PlaceOrder";
 import Order from "./pages/Order";
-// import ProductDetail from "./pages/ProductDetail";
+ import { ToastContainer, toast } from 'react-toastify';
+import NotFound from "./pages/NotFound";
+import Ai from "./component/Ai";
 
 function App() {
   let { userData } = useContext(userDataContext);
@@ -23,6 +25,7 @@ function App() {
 
   return (
     <>
+    <ToastContainer />
       {userData && <Nav />}
       <Routes>
         <Route
@@ -113,7 +116,10 @@ function App() {
         element={userData ? <Order/> : <Navigate to="/login" state={{from: location.pathname}} /> }/>
 
 
+          <Route path='*' element={<NotFound/>}/>
+        
       </Routes>
+      <Ai/>
     </>
   );
 }

@@ -8,6 +8,7 @@ import axios from "axios";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../../utils/Firebase";
 import { userDataContext } from "./context/UserContext";
+import { toast } from 'react-toastify';
 
 
 const Login = () => {
@@ -49,9 +50,10 @@ const googleLogin = async () => {
     ); 
 
     console.log(result.data); 
-
+  
   } catch (error) {
     console.log(error);
+   
   }
 };
 

@@ -6,6 +6,8 @@ import { useState } from "react";
 import { useContext } from "react";
 import { authDataContext } from "../context/AuthContext";
 import axios from "axios";
+import { toast } from 'react-toastify'
+import Loading from '../component/Loading'
 
 function Add() {
   let [image1, setImage1] = useState(false);
@@ -23,7 +25,9 @@ function Add() {
   let { serverUrl } = useContext(authDataContext);
 
   const handleAddProduct = async (e) => {
+     setLoading(true)
     e.preventDefault();
+    
     try {
       let formData = new FormData();
       formData.append("name", name);
@@ -50,6 +54,8 @@ function Add() {
       );
 
       console.log(result.data);
+        toast.success("ADD Product Successfully")
+      setLoading(false)
 
       if (result.data) {
         setName("");
@@ -65,7 +71,8 @@ function Add() {
       }
     } catch (error) {
       console.log(error);
-      setLoading(false);
+       setLoading(false)
+       toast.error("Add Product Failed")
     }
   };
 
@@ -357,7 +364,7 @@ function Add() {
           </div>
 
           <button className="w-[140px] px-[20px] py-[20px] rounded-xl bg-[#65d8f7] flex items-center justify-center gap-[10px] text-black active:bg-slate-700 active:text-white active:border-[2px] border-white">
-            {loading ? <Loading /> : "Add Product"}
+           {loading ? <Loading/> : "Add Product"}
           </button>
         </form>
       </div>
