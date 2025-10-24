@@ -7,7 +7,7 @@ import { userDataContext } from "../pages/context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { IoSearchCircle } from "react-icons/io5";
-import { authDataContext } from "../pages/context/authContext";
+import { authDataContext } from "../pages/context/AuthContext";
 import axios from "axios";
 import { IoMdHome } from "react-icons/io";
 import { HiOutlineCollection } from "react-icons/hi";
