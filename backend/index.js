@@ -24,6 +24,10 @@ console.log("Cloudinary Config Test:", {
   api_secret: process.env.CLOUDINARY_API_SECRET ? "✓ Loaded" : "✗ Missing"
 });
 
+console.log("rozarpay",{
+   key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET
+})
 
 
 const port = process.env.PORT || 8000;

@@ -1,11 +1,13 @@
 
 import ai from "../assets/ai.png"
+import { toast } from 'react-toastify';
 
 import { useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
+
 import open from "../assets/open.mp3"
 import { shopDataContext } from '../pages/context/ShopContext'
 import { useContext, useState } from "react"
+
 function Ai() {
   let {showSearch , setShowSearch} = useContext(shopDataContext)
   let navigate = useNavigate()

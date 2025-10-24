@@ -9,6 +9,7 @@ import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../../utils/Firebase";
 import { userDataContext } from "./context/UserContext";
 import { toast } from 'react-toastify';
+import Loading from '../component/Loading';
 
 
 const Login = () => {
@@ -18,8 +19,10 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const { serverUrl } = useContext(authDataContext);
   let {getCurrentUser} = useContext(userDataContext)
+     let [loading,setLoading] = useState(false)
 
   const handleLogin = async (e) => {
+    setLoading(true)
     e.preventDefault();
     try {
       const result = await axios.post(
@@ -28,11 +31,15 @@ const Login = () => {
         { withCredentials: true }
       );
 
-      console.log(result.data);
-      getCurrentUser()
-      navigate("/");
+       console.log(result.data)
+            setLoading(false)
+            getCurrentUser()
+            navigate("/")
+            toast.success("User Login Successful")
+            
     } catch (error) {
-      console.error("Login failed:", error);
+      console.log(error)
+            toast.error("User Login Failed")
     }
   };
 
@@ -124,7 +131,7 @@ const googleLogin = async () => {
           </div>
 
           <button className="w-full h-[50px] bg-[#6060f5] rounded-lg flex items-center justify-center mt-[20px] text-[17px] font-semibold">
-            Login
+          {loading? <Loading/> : "Login"}  Login
           </button>
 
           <p className="flex gap-[10px] text-[15px]">

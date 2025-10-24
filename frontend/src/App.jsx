@@ -1,3 +1,5 @@
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Registration from "./pages/Registration";
@@ -15,7 +17,7 @@ import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import PlaceOrder from "./pages/PlaceOrder";
 import Order from "./pages/Order";
- import { ToastContainer, toast } from 'react-toastify';
+
 import NotFound from "./pages/NotFound";
 import Ai from "./component/Ai";
 

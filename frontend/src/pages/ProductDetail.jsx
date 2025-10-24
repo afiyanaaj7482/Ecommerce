@@ -4,6 +4,7 @@ import { shopDataContext } from "./context/ShopContext";
 import { FaStar } from "react-icons/fa";
 import { FaStarHalfAlt } from "react-icons/fa";
 import RelatedProduct from "../component/RelatedProduct";
+import Loading from '../component/Loading';
 
 function ProductDetail() {
   const { productId } = useParams();

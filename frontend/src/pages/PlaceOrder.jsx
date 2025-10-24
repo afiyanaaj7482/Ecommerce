@@ -7,6 +7,8 @@ import { shopDataContext } from './context/ShopContext'
 import { authDataContext } from './context/authContext'
 import axios, { Axios } from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import Loading from '../component/Loading'
 
 function PlaceOrder() {
 
@@ -87,17 +89,19 @@ function PlaceOrder() {
       switch(method){
         case 'cod': 
       
-        const result = await axios.post(serverUrl + "/api/order/placeorder" , orderData , {withCredentials:true})
+
+
+        const result = await axios.post(serverUrl+"/api/order/placeorder" , orderData , {withCredentials:true} )
         console.log(result.data)
         if(result.data){
             setCartItem({})
-            // toast.success("Order Placed")
+            toast.success("Order Placed")
             navigate("/order")
             setLoading(false)
 
         }else{
             console.log(result.data.message)
-            // toast.error("Order Placed Error")
+            toast.error("Order Placed Error")
              setLoading(false)
         }
 
@@ -107,7 +111,7 @@ function PlaceOrder() {
         const resultRazorpay = await axios.post(serverUrl + "/api/order/razorpay" , orderData , {withCredentials:true})
         if(resultRazorpay.data){
           initPay(resultRazorpay.data)
-          //  toast.success("Order Placed")
+           toast.success("Order Placed")
            setLoading(false)
         }
 
@@ -196,7 +200,7 @@ function PlaceOrder() {
           <button type='submit' className='text-[18px] active:bg-slate-500 cursor-pointer bg-[#3bcee848] 
           py-[-30px]  px-[30px] rounded-2xl text-white flex items-center justify-center gap-[20px] absolute 
           lg:right-[20%] bottom-[10%] right-[35%] border-[1px] border-[#80808049] ml-[30px] mt-[20px]' >
-            {"PLACE ORDER"}</button>
+             {loading? <Loading/> : "PLACE ORDER"}</button>
          </div> 
           </form>
      </div>
