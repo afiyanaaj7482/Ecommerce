@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
-import AuthContext from "./pages/context/authContext.jsx";
+import AuthContext from "./pages/context/AuthContext.jsx";
 import UserContext from "./pages/context/UserContext.jsx";
 import ShopContext from "./pages/context/ShopContext.jsx";
 
