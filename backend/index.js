@@ -36,7 +36,7 @@ const app = express();
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
- origin:["https://ecommerce-frontendd-vkfo.onrender.com" , "http://localhost:5174"],
+ origin:["https://ecommerce-frontendd-vkfo.onrender.com" , "https://ecommerce-admin-8q8o.onrender.com"],
  credentials:true
 }))
 
